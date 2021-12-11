@@ -1,3 +1,12 @@
+## [2.0.0]
+
+- Support sound null safety.
+
+## [1.0.0] - December 30, 2019
+
+- `readOnly` is now the default.
+- Upgrade `intl` dep.
+
 ## [1.0.0-pre.5] - September 6, 2019
 
 - Upgrade dep, requires Flutter master channel.
