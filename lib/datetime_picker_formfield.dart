@@ -66,7 +66,7 @@ class DateTimeField extends FormField<DateTime> {
     InputCounterWidgetBuilder? buildCounter,
   }) : super(
             key: key,
-            autovalidateMode: autovalidate?AutovalidateMode.always:AutovalidateMode.always,
+            autovalidateMode: autovalid,
             // autovalidate: autovalidate,
             initialValue: initialValue,
             enabled: enabled,
@@ -74,8 +74,9 @@ class DateTimeField extends FormField<DateTime> {
             onSaved: onSaved,
             builder: (field) {
               final _DateTimeFieldState state = field as _DateTimeFieldState;
-              final InputDecoration effectiveDecoration =
-                  (decoration ?? const InputDecoration()).applyDefaults(Theme.of(field.context).inputDecorationTheme);
+              final InputDecoration effectiveDecoration = (decoration ??
+                      const InputDecoration())
+                  .applyDefaults(Theme.of(field.context).inputDecorationTheme);
               return TextField(
                 controller: state._effectiveController,
                 focusNode: state._effectiveFocusNode,
@@ -105,9 +106,12 @@ class DateTimeField extends FormField<DateTime> {
                 minLines: minLines,
                 expands: expands,
                 maxLength: maxLength,
-                onChanged: (string) => field.didChange(tryParse(string, format)),
+                onChanged: (string) =>
+                    field.didChange(tryParse(string, format)),
                 onEditingComplete: onEditingComplete,
-                onSubmitted: (string) => onFieldSubmitted == null ? null : onFieldSubmitted(tryParse(string, format)),
+                onSubmitted: (string) => onFieldSubmitted == null
+                    ? null
+                    : onFieldSubmitted(tryParse(string, format)),
                 inputFormatters: inputFormatters,
                 enabled: enabled,
                 cursorWidth: cursorWidth,
@@ -126,7 +130,8 @@ class DateTimeField extends FormField<DateTime> {
   final DateFormat format;
 
   /// Called when the date chooser dialog should be shown.
-  final Future<DateTime?> Function(BuildContext context, DateTime? currentValue) onShowPicker;
+  final Future<DateTime?> Function(BuildContext context, DateTime? currentValue)
+      onShowPicker;
 
   /// The [InputDecoration.suffixIcon] to show when the field has text. Tapping
   /// the icon will clear the text field. Set this to `null` to disable that
@@ -166,10 +171,11 @@ class DateTimeField extends FormField<DateTime> {
   }
 
   /// Sets the hour and minute of a [DateTime] from a [TimeOfDay].
-  static DateTime combine(DateTime date, TimeOfDay? time) =>
-      DateTime(date.year, date.month, date.day, time?.hour ?? 0, time?.minute ?? 0);
+  static DateTime combine(DateTime date, TimeOfDay? time) => DateTime(
+      date.year, date.month, date.day, time?.hour ?? 0, time?.minute ?? 0);
 
-  static DateTime? convert(TimeOfDay? time) => time == null ? null : DateTime(1, 1, 1, time.hour, time.minute);
+  static DateTime? convert(TimeOfDay? time) =>
+      time == null ? null : DateTime(1, 1, 1, time.hour, time.minute);
 }
 
 class _DateTimeFieldState extends FormFieldState<DateTime> {
@@ -181,7 +187,8 @@ class _DateTimeFieldState extends FormFieldState<DateTime> {
   @override
   DateTimeField get widget => super.widget as DateTimeField;
 
-  TextEditingController? get _effectiveController => widget.controller ?? _controller;
+  TextEditingController? get _effectiveController =>
+      widget.controller ?? _controller;
   FocusNode? get _effectiveFocusNode => widget.focusNode ?? _focusNode;
 
   bool get hasFocus => _effectiveFocusNode!.hasFocus;
@@ -210,7 +217,8 @@ class _DateTimeFieldState extends FormFieldState<DateTime> {
       widget.controller?.addListener(_handleControllerChanged);
 
       if (oldWidget.controller != null && widget.controller == null) {
-        _controller = TextEditingController.fromValue(oldWidget.controller!.value);
+        _controller =
+            TextEditingController.fromValue(oldWidget.controller!.value);
         _controller!.addListener(_handleControllerChanged);
       }
       if (widget.controller != null) {
@@ -268,7 +276,8 @@ class _DateTimeFieldState extends FormFieldState<DateTime> {
     // notifications for changes originating from within this class -- for
     // example, the reset() method. In such cases, the FormField value will
     // already have been set.
-    if (_effectiveController!.text != format(value)) didChange(parse(_effectiveController!.text));
+    if (_effectiveController!.text != format(value))
+      didChange(parse(_effectiveController!.text));
   }
 
   String format(DateTime? date) => DateTimeField.tryFormat(date, widget.format);
@@ -310,5 +319,7 @@ class _DateTimeFieldState extends FormFieldState<DateTime> {
   }
 
   bool shouldShowClearIcon([InputDecoration? decoration]) =>
-      widget.resetIcon != null && (hasText || hasFocus) && decoration?.suffixIcon == null;
+      widget.resetIcon != null &&
+      (hasText || hasFocus) &&
+      decoration?.suffixIcon == null;
 }
