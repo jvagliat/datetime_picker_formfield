@@ -66,7 +66,7 @@ class DateTimeField extends FormField<DateTime> {
     InputCounterWidgetBuilder? buildCounter,
   }) : super(
             key: key,
-            autovalidateMode: autovalid,
+            autovalidateMode: autovalidateMode,
             // autovalidate: autovalidate,
             initialValue: initialValue,
             enabled: enabled,
